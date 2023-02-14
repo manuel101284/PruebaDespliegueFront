@@ -3,7 +3,7 @@ import todo from "./apis";
 
 import Form from "./components/Form";
 //import Section from "./components/Section";
-import List from "./components/List";
+import List from "../../src/components/List";
 
 
 const appTitle = "To do App";
