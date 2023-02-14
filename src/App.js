@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import todos from "./apis";
+import todo from "./apis";
 
 import Form from "./components/Form";
-import Section from "./components/Section";
+//import Section from "./components/Section";
 import List from "./components/List";
-import Todo from "./components/Todo";
 
-const appTitle = "To-Do-App";
+
+const appTitle = "To do App";
 
 // const list = [
 //     { title: "Test # 1", completed: false },
@@ -19,46 +19,47 @@ const App = () => {
     const [todoList, setTodoList] = useState([]);
 
     useEffect(() => {
-        async function fetchData(){
-            const {data} = await todos.get("/todos");
+        async function fetchData() {
+            const { data } = await todo.get("/todos");
             setTodoList(data);
         }
         fetchData();
     }, []);
 
-    const addTodo = async(item) => {
-        const {data} = await todos.post("/todos", item);
+    const addTodo = async (item) => {
+        const { data } = await todo.post("/todos", item);
         setTodoList((oldlist) => [...oldlist, data]);
+        //setTodoList((oldlist) => [...oldlist, item]);
     }
 
-    const removeTodo = async(id) => {
-        await todos.delete(`/todos/${id}`);
-        setTodoList((oldList) => oldList.filter((item) => item._id !== id ));
+    const removeTodo = async (id) => {
+        await todo.delete(`/todos/${id}`);
+        setTodoList((oldList) => oldList.filter((item) => item._id !== id));
     }
 
-    const editTodo = async(id, item) => {
-        await todos.put(`/todos/${id}`, item);
+    const editTodo = async (id, item) => {
+        await todo.put(`/todos/${id}`, item);
     }
 
     return (
-        <div className="ui container center aligned">
-            <Section>
-                <h1>
+        <div className="m-auto">
+            <>
+                <h1 className="font-Rubik text-dark text-center font-normal">
                     {appTitle}
                 </h1>
-            </Section>
+            </>
 
-            <Section>
-                <Form addTodo={addTodo}/>
-            </Section>
+            <>
+                <Form addTodo={addTodo} />
+            </>
 
-            <Section>
+            <>
                 <List
                     editTodoListProp={editTodo}
                     removeTodoListProp={removeTodo}
                     list={todoList}
                 />
-            </Section>
+            </>
 
         </div>
     )
